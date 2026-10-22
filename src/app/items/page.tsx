@@ -4,7 +4,7 @@
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { Item } from "@/lib/data";
-import { getItems } from "@/lib/storage"; // নতুন ইমপোর্ট
+import { getItems } from "@/lib/storage";
 import { Search, Filter, Star } from "lucide-react";
 
 export default function ItemsPage() {
@@ -13,7 +13,6 @@ export default function ItemsPage() {
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [priceFilter, setPriceFilter] = useState("All");
 
-  // পেজ লোড হলে ডেটা আনা
   useEffect(() => {
     setItems(getItems());
   }, []);
@@ -33,23 +32,25 @@ export default function ItemsPage() {
   }, [items, searchQuery, categoryFilter, priceFilter]);
 
   return (
-    <div className="mx-auto min-h-[80vh] max-w-7xl px-4 py-12 md:px-6">
-      <div className="mb-10 text-center md:text-left">
-        <h1 className="text-3xl font-bold tracking-tight md:text-4xl">Explore Gadgets</h1>
-        <p className="mt-2 text-muted-foreground">Find the perfect tech for your needs.</p>
+    <div className="mx-auto min-h-[80vh] max-w-7xl px-4 py-16 md:px-6">
+      {/* Header */}
+      <div className="mb-12 text-center md:text-left">
+        <h1 className="text-4xl font-bold tracking-tight md:text-5xl text-foreground">Explore Gadgets</h1>
+        <p className="mt-4 text-lg text-muted-foreground">Find the perfect tech for your needs.</p>
       </div>
 
-      <div className="mb-8 flex flex-col gap-4 rounded-2xl border bg-card p-4 md:flex-row md:items-center md:justify-between">
+      {/* Filters */}
+      <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div className="relative w-full md:max-w-md">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <input type="text" placeholder="Search gadgets..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full rounded-full border bg-transparent py-2 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500" />
+          <input type="text" placeholder="Search gadgets..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full rounded-lg border border-border bg-background py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-foreground transition-all" />
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm font-medium text-foreground">
             <Filter className="h-4 w-4" /> Filters:
           </div>
-          <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} className="rounded-full border bg-transparent px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
+          <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} className="rounded-lg border border-border bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-foreground cursor-pointer text-foreground">
             <option value="All">All Categories</option>
             <option value="Laptop">Laptop</option>
             <option value="Smartphone">Smartphone</option>
@@ -57,7 +58,7 @@ export default function ItemsPage() {
             <option value="Audio">Audio</option>
             <option value="Accessories">Accessories</option>
           </select>
-          <select value={priceFilter} onChange={(e) => setPriceFilter(e.target.value)} className="rounded-full border bg-transparent px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
+          <select value={priceFilter} onChange={(e) => setPriceFilter(e.target.value)} className="rounded-lg border border-border bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-foreground cursor-pointer text-foreground">
             <option value="All">All Prices</option>
             <option value="Under $500">Under $500</option>
             <option value="$500 - $1000">$500 - $1000</option>
@@ -66,26 +67,44 @@ export default function ItemsPage() {
         </div>
       </div>
 
+      {/* Grid */}
       {filteredItems.length === 0 ? (
-        <div className="flex h-64 flex-col items-center justify-center rounded-2xl border border-dashed bg-muted/30">
+        <div className="flex h-64 flex-col items-center justify-center rounded-2xl border border-dashed border-border bg-card">
           <p className="text-lg font-medium text-muted-foreground">No items found matching your criteria.</p>
         </div>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredItems.map((item) => (
-            <div key={item.id} className="group flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm transition-all hover:shadow-md hover:border-orange-500/50">
-              <div className="relative aspect-video w-full overflow-hidden bg-muted">
-                <img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <div className="absolute top-3 right-3 rounded-full bg-background/90 px-2.5 py-1 text-xs font-bold shadow-sm backdrop-blur-sm">${item.price}</div>
-              </div>
-              <div className="flex flex-1 flex-col p-5">
-                <div className="mb-2 flex items-center justify-between">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-orange-500">{item.category}</span>
-                  <div className="flex items-center gap-1 text-sm font-medium"><Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />{item.rating}</div>
+            <div key={item.id} className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-all hover:shadow-lg hover:shadow-border/50">
+              {/* Image */}
+              <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted p-6 flex items-center justify-center">
+                <img src={item.image} alt={item.title} className="h-full w-full object-cover rounded-xl transition-transform duration-500 group-hover:scale-105" />
+                <div className="absolute top-4 right-4 rounded-md bg-primary px-2.5 py-1 text-xs font-bold text-primary-foreground shadow-sm">
+                  ${item.price}
                 </div>
-                <h3 className="mb-2 text-lg font-bold leading-tight">{item.title}</h3>
-                <p className="mb-4 flex-1 text-sm text-muted-foreground line-clamp-2">{item.shortDescription}</p>
-                <Link href={`/items/${item.id}`} className="inline-flex w-full items-center justify-center rounded-full bg-orange-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-orange-600">View Details</Link>
+              </div>
+
+              {/* Content */}
+              <div className="flex flex-1 flex-col p-6">
+                <div className="mb-3 flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-widest text-accent">{item.category}</span>
+                  <div className="flex items-center gap-1 text-sm font-medium text-foreground">
+                    <Star className="h-3.5 w-3.5 fill-foreground text-foreground" />
+                    {item.rating}
+                  </div>
+                </div>
+                
+                <h3 className="mb-2 text-lg font-bold leading-tight text-foreground">{item.title}</h3>
+                <p className="mb-6 flex-1 text-sm text-muted-foreground line-clamp-2">
+                  {item.shortDescription}
+                </p>
+
+                <Link
+                  href={`/items/${item.id}`}
+                  className="inline-flex w-full items-center justify-center rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-semibold text-foreground transition-all hover:bg-primary hover:text-primary-foreground"
+                >
+                  View Details
+                </Link>
               </div>
             </div>
           ))}
