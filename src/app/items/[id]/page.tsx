@@ -4,7 +4,7 @@
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { mockItems } from "@/lib/data";
-import { ArrowLeft, Star, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Star, CheckCircle2, Calendar } from "lucide-react";
 
 export default function ItemDetailsPage() {
   const params = useParams();
@@ -30,26 +30,15 @@ export default function ItemDetailsPage() {
 
   return (
     <div className="mx-auto min-h-[80vh] max-w-7xl px-4 py-16 md:px-6">
-      {/* Back Button */}
-      <button 
-        onClick={() => router.push("/items")}
-        className="mb-10 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-      >
+      <button onClick={() => router.push("/items")} className="mb-10 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
         <ArrowLeft className="h-4 w-4" /> Back to Items
       </button>
 
-      {/* Main Content */}
       <div className="grid gap-12 md:grid-cols-2">
-        {/* Image Section */}
         <div className="overflow-hidden rounded-3xl border border-border bg-muted p-8 flex items-center justify-center">
-          <img
-            src={item.image}
-            alt={item.title}
-            className="h-full w-full max-w-md object-contain rounded-xl"
-          />
+          <img src={item.image} alt={item.title} className="h-full w-full max-w-md object-contain rounded-xl" />
         </div>
 
-        {/* Details Section */}
         <div className="flex flex-col justify-center">
           <div className="mb-6 flex items-center gap-3">
             <span className="rounded-full bg-accent/10 px-3 py-1 text-xs font-bold text-accent uppercase tracking-wider">
@@ -62,16 +51,22 @@ export default function ItemDetailsPage() {
           </div>
 
           <h1 className="mb-4 text-4xl font-bold md:text-5xl text-foreground leading-tight">{item.title}</h1>
-          <p className="mb-8 text-3xl font-bold text-foreground">${item.price}</p>
           
-          <div className="mb-10 border-t border-border pt-8">
+          {/* Price and Date Added */}
+          <div className="mb-8 flex items-center justify-between border-b border-border pb-6">
+            <p className="text-3xl font-bold text-foreground">${item.price}</p>
+            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Calendar className="h-4 w-4" /> Added: Oct 2026
+            </p>
+          </div>
+          
+          <div className="mb-10">
             <h3 className="mb-3 text-lg font-semibold text-foreground">Description</h3>
             <p className="text-muted-foreground leading-relaxed">
               {item.fullDescription}
             </p>
           </div>
 
-          {/* Specifications */}
           <div className="mb-10">
             <h3 className="mb-4 text-lg font-semibold text-foreground">Key Specifications</h3>
             <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -90,7 +85,6 @@ export default function ItemDetailsPage() {
         </div>
       </div>
 
-      {/* Related Items */}
       {relatedItems.length > 0 && (
         <div className="mt-24 border-t border-border pt-16">
           <h2 className="mb-8 text-2xl font-bold text-foreground">Related Items</h2>

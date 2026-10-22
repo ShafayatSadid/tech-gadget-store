@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TechGadget - Premium Tech Store
 
-## Getting Started
+A modern, responsive e-commerce web application built with Next.js (App Router) and Firebase Authentication. This project was developed as part of the Remontada Next.js Assessment Task.
 
-First, run the development server:
+## 🔗 Links
+- **Live Demo:** [Your Live Link Here]
+- **GitHub Repository:** [Your Repo Link Here]
 
-```bash
+## 📝 Short Project Description
+TechGadget is a premium tech gadget store where users can browse the latest tech products. It features a fully responsive, Vercel-inspired minimalist UI with system-based dark/light mode. The app includes public pages for browsing items and protected pages for authenticated users to add and manage products.
+
+## ✨ Key Features
+- **Firebase Authentication:** Secure Login and Registration using Email/Password and Google OAuth.
+- **Public & Protected Routes:** Unauthenticated users can browse products, while only logged-in users can access the Add and Manage Product pages.
+- **Dynamic Routing:** Dedicated item details page using Next.js dynamic routes (`/items/[id]`).
+- **Search & Filtering:** Real-time search functionality and filtering by Category and Price range on the Items page.
+- **Local Storage Integration:** Users can add new products which are persisted in the browser's local storage (merged with static data).
+- **Responsive UI:** Fully responsive design optimized for mobile, tablet, and desktop screens.
+- **Minimalist Theme:** Clean, professional UI built with Tailwind CSS, featuring system-based Dark/Light mode support.
+
+## 🛠️ Technologies Used
+- **Framework:** Next.js 16 (App Router)
+- **Authentication:** Firebase
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide React
+- **Notifications:** Sonner (Toast)
+
+## 🚀 Setup & Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone [Your Repo Link Here]
+   cd tech-gadget-store
+Install dependencies:
+
+bash
+npm install
+Set up Environment Variables:
+Create a .env.local file in the root directory and add your Firebase configuration keys:
+
+env
+NEXT_PUBLIC_FIREBASE_API_KEY="your_api_key"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your_auth_domain"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="your_project_id"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your_storage_bucket"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="your_messaging_sender_id"
+NEXT_PUBLIC_FIREBASE_APP_ID="your_app_id"
+Run the development server:
+
+bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Open your browser:
+Navigate to http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+📍 Route Summary
+Route	Description	Access
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+/	Landing Page (Hero, Features, Featured Items, Testimonials, Footer)	Public
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+/items	Items listing with Search and Filters	Public
 
-## Learn More
+/items/[id]	Detailed view of a specific item	Public
 
-To learn more about Next.js, take a look at the following resources:
+/about	About the app and its mission	Public
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+/contact	Contact information and form	Public
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+/login	User Login page	Public
 
-## Deploy on Vercel
+/register	User Registration page	Public
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+/items/add	Form to add a new product	Protected (Auth Required)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+/items/manage	Dashboard to view and delete products	Protected (Auth Required)
