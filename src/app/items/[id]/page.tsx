@@ -1,12 +1,14 @@
 // src/app/items/[id]/page.tsx
 "use client";
 
+import { Suspense } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { mockItems } from "@/lib/data";
-import { ArrowLeft, Star, CheckCircle2, Calendar } from "lucide-react";
+import { ArrowLeft, Star, CheckCircle2, Calendar, Loader2 } from "lucide-react";
 
-export default function ItemDetailsPage() {
+// ১. মূল কম্পোনেন্ট যেখানে useParams ব্যবহার করা হয়েছে
+function ItemDetailsContent() {
   const params = useParams();
   const router = useRouter();
   const id = params.id as string;
@@ -52,7 +54,6 @@ export default function ItemDetailsPage() {
 
           <h1 className="mb-4 text-4xl font-bold md:text-5xl text-foreground leading-tight">{item.title}</h1>
           
-          {/* Price and Date Added */}
           <div className="mb-8 flex items-center justify-between border-b border-border pb-6">
             <p className="text-3xl font-bold text-foreground">${item.price}</p>
             <p className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -107,5 +108,20 @@ export default function ItemDetailsPage() {
         </div>
       )}
     </div>
+  );
+}
+
+// ২. মেইন পেজ (Suspense দিয়ে র্যাপ করা)
+export default function ItemDetailsPage() {
+  return (
+    <Suspense 
+      fallback={
+        <div className="flex h-[70vh] items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-foreground" />
+        </div>
+      }
+    >
+      <ItemDetailsContent />
+    </Suspense>
   );
 }
